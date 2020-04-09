@@ -2,8 +2,12 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <style>
-        #overlay {
+    <style type="text/css">
+        .view { }
+    </style>
+    <style type="text/css"></style>
+    <!--<style>
+        #processing_overlay {
             position: fixed;
             display: none;
             width: 100%;
@@ -16,26 +20,26 @@
             z-index: 2;
             cursor: pointer;
         }
-        #centered {
+        #processing_centered {
             width: 100%;
             height: 100%;
             position: absolute;
             top: 50%;
             left: 50%;
         }
-    </style>
+    </style>-->
 
 </head>
 <body>
-    <div id="overlay">
-        <h1 id="centered">Processing..</h1>
+    <!--<div id="processing_overlay">
+        <h1 id="processing_centered">Processing..</h1>
         <script>
             function overlay_on() {
                 overlay_on_async().then(function () { console.log("overlay_on"); });
             }
 
             async function overlay_on_async() {
-                document.getElementById("overlay").style.display = "block";
+                document.getElementById("processing_overlay").style.display = "block";
             }
 
             function overlay_off() {
@@ -43,669 +47,652 @@
             }
 
             async function overlay_off_async() {
-                document.getElementById("overlay").style.display = "none";
+                document.getElementById("processing_overlay").style.display = "none";
             }
         </script>
-    </div>
-<div id="57d5a8d11b54409a9aa616a6bb223366">
-    <h1></h1>
-    <div id="vis-57d5a8d11b54409a9aa616a6bb223366" class="view">
-        <script language="javascript">
+    </div>-->
+    <div id="57d5a8d11b54409a9aa616a6bb223366">
+        <h1></h1>
+        <div id="vis-57d5a8d11b54409a9aa616a6bb223366" class="view">
+            <script language="javascript">
 
-            if ((typeof (window.requirejs) !== typeof (Function)) ||
-                (typeof (window.requirejs.config) !== typeof (Function))) {
+                if ((typeof (window.requirejs) !== typeof (Function)) ||
+                    (typeof (window.requirejs.config) !== typeof (Function))) {
 
-                var script = document.createElement("script");
-                script.setAttribute("type", "text/javascript");
-                script.setAttribute("src", "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js");
-                script.onload = function() {
-                    window.RequireVegaLite();
-                };
-                document.head.appendChild(script);
-            } else {
-                window.RequireVegaLite();
-            }
-
-            function RequireVegaLite() {
-                if ((typeof (window.RequireVegaLiteSvg) !== typeof (Function)) &&
-                    (typeof (window.RequireVegaLiteWebgl) !== typeof (Function))) {
-
-                    var vegaLiteScript = document.createElement("script");
-                    vegaLiteScript.setAttribute("type", "text/javascript");
-                    vegaLiteScript.setAttribute("src", "https://trmcnealy.github.io/scripts/VegaLiteScript.js");
-                    vegaLiteScript.onload = function() {
-                        window.dispatchEvent(window.VegaLiteLoaded);
+                    var script = document.createElement("script");
+                    script.setAttribute("type", "text/javascript");
+                    script.setAttribute("src", "https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js");
+                    script.onload = function() {
+                        window.RequireVegaLite();
                     };
-                    document.head.appendChild(vegaLiteScript);
+                    document.head.appendChild(script);
                 } else {
-                    window.dispatchEvent(window.VegaLiteLoaded);
+                    window.RequireVegaLite();
                 }
-            }
 
-            //Array.from(
-            //    seattle.filter(arrow.predicate.col('precipitation').gt(50)),
-            //    row => row.date
-            //)
+                function RequireVegaLite() {
+                    if ((typeof (window.RequireVegaLiteSvg) !== typeof (Function)) &&
+                        (typeof (window.RequireVegaLiteWebgl) !== typeof (Function))) {
 
-            window["pso_data_file"] = null;
-            window["histogram_data"] = new Map();
-            window["scatter_data"] = new Map();
-            window["residual_data"] = new Map();
-
-            const particle_position_names = ["km", "kF", "kf", "ye", "LF", "Lf"];
-
-            function particleContours(variableName, variableRange) {
-
-                const spec = {
-                    "height": 150.0,
-                    "width": 250.0,
-                    "mark": {
-                        "type": "bar",
-                        "clip": true
-                    },
-                    "encoding": {
-                        "x": {
-                            "title": particle_position_names[variableName],
-                            "bin": { "maxbins": 20 },
-                            "field": `Particle${variableName}Position`,
-                            "type": "quantitative",
-                            "scale": { "domain": variableRange }
-                        },
-                        "y": {
-                            "aggregate": "count",
-                            "type": "quantitative"
-                        }
+                        var vegaLiteScript = document.createElement("script");
+                        vegaLiteScript.setAttribute("type", "text/javascript");
+                        vegaLiteScript.setAttribute("src", "https://trmcnealy.github.io/scripts/VegaLiteScript.js");
+                        vegaLiteScript.onload = function() {
+                            window.dispatchEvent(window.VegaLiteLoaded);
+                        };
+                        document.head.appendChild(vegaLiteScript);
+                    } else {
+                        window.dispatchEvent(window.VegaLiteLoaded);
                     }
-                };
+                }
 
-                return spec;
-            }
+                //Array.from(
+                //    seattle.filter(arrow.predicate.col('precipitation').gt(50)),
+                //    row => row.date
+                //)
 
-            function particleHistogram(variableName, variableRange) {
+                window["pso_data_file"] = null;
+                //window["histogram_data"] = new Map();
+                //window["scatter_data"] = new Map();
+                //window["residual_data"] = new Map();
 
-                const spec = {
-                    "height": 150.0,
-                    "width": 250.0,
-                    "selection": {
-                        "LegendSelect": {
-                            "type": "multi",
-                            "resolve": "global",
-                            "fields": ["SwarmIndex"],
-                            "bind": "legend"
+                const particle_position_names = ["km", "kF", "kf", "ye", "LF", "Lf"];
+
+                function particleHistogram(variableName, variableRange) {
+
+                    const spec = {
+                        "height": 150.0,
+                        "width": 250.0,
+                        "selection": {
+                            "LegendSelect": {
+                                "type": "multi",
+                                "resolve": "global",
+                                "fields": ["SwarmIndex"],
+                                "bind": "legend"
+                            },
+                            "DataSelect": {
+                                "type": "interval",
+                                "on": "[mousedown[event.shiftKey], window:mouseup] > window:mousemove!",
+                                "resolve": "union",
+                                "init": { "x": [0,0]}
+                            }
                         },
-                        "DataSelectGlobal": {
-                            "type": "interval",
-                            "resolve": "global"
-                        }
-                    },
-                    "mark": {
-                        "type": "bar",
-                        "clip": true
-                    },
-                    "transform": [{
-                        "field": `Particle${variableName}Position`,
-                        "bin": { "maxbins": 50 },
-                        "as": `binParticle${variableName}Position`
-                    }],
-                    "encoding": {
-                        "x": {
-                            "title": particle_position_names[variableName],
-                            "field": `binParticle${variableName}Position`,
-                            //"bin": { "maxbins": 20 },
-                            "type": "quantitative",
-                            "scale": { "domain": variableRange }
+                        "mark": {
+                            "type": "bar",
+                            "clip": true
                         },
-                        "y": {
-                            "aggregate": "count",
-                            "type": "quantitative"
-                        },
-                        "tooltip": [{
-                            "field": "SwarmIndex",
-                            "type": "nominal"
-                        }],
-                        "color": {
-                            "condition": {
-                                "field": "SwarmIndex",
+                        "encoding": {
+                            "x": {
+                                "title": particle_position_names[variableName],
+                                "field": `Particle${variableName}Position`,
+                                "bin": { "maxbins": 25 },
                                 "type": "quantitative",
-                                "selection": "DataSelectGlobal",
-                                "scale": {
-                                    "range": ["#fee087", "#fed16f", "#febd59", "#fea849", "#fd903e", "#fc7335", "#f9522b", "#ee3423", "#de1b20", "#ca0b22","#af0225"]
+                                "scale": { "domain": variableRange }
+                            },
+                            "y": {
+                                "aggregate": "count",
+                                "type": "quantitative"
+                            },
+                            "tooltip": [
+                                {
+                                    "field": "SwarmIndex",
+                                    "type": "nominal"
                                 }
+                            ],
+                            "color": {
+                                "condition": {
+                                    "selection": "DataSelect",
+                                    "field": "SwarmIndex",
+                                    "type": "nominal",
+                                    "scale": {
+                                        "range": "diverging"
+                                    }
+                                },
+                                "value": "lightgrey"
                             },
-                            "value": "lightgrey"
-                        },
-                        "opacity": {
-                            "condition": {
-                                "selection": "LegendSelect",
-                                "value": 1
+                            "opacity": {
+                                "condition": {
+                                    "selection": "LegendSelect",
+                                    "value": 1
+                                },
+                                "value": 0.1
+                            }
+                        }
+                    };
+
+                                   
+
+                    return spec;
+                }
+
+                function particleScatterChart(variableXName, variableXRange, variableYName, variableYRange) {
+
+                    const spec = {
+                        "height": 150.0,
+                        "width": 250.0,
+                        "selection": {
+                            "LegendSelect": {
+                                "type": "multi",
+                                "resolve": "global",
+                                "bind": "legend"
                             },
-                            "value": 0.1
+                            //"DataSelectGlobal": {
+                            //    "type": "interval",
+                            //    "on": "[mousedown[event.shiftKey], window:mouseup] > window:mousemove!",
+                            //    "resolve": "global"
+                            //},
+                            "DataSelect": {
+                                "type": "interval",
+                                "on": "[mousedown[event.shiftKey], window:mouseup] > window:mousemove!",
+                                "resolve": "global"
+                            }
+                        },
+                        "mark": {
+                            "type": "circle",
+                            "clip": true
+                        },
+                        "encoding": {
+                            "x": {
+                                "title": particle_position_names[variableXName],
+                                "field": `Particle${variableXName}Position`,
+                                "type": "quantitative",
+                                "scale": { "domain": variableXRange }
+                            },
+                            "y": {
+                                "title": particle_position_names[variableYName],
+                                "field": `Particle${variableYName}Position`,
+                                "type": "quantitative",
+                                "scale": { "domain": variableYRange }
+                            },
+                            "tooltip": [
+                                {
+                                    "field": "SwarmIndex",
+                                    "type": "nominal"
+                                }, {
+                                    "field": "Particle",
+                                    "type": "nominal"
+                                }
+                            ],
+                            "color": {
+                                "condition": {
+                                    "selection": "DataSelect",
+                                    "field": "SwarmIndex",
+                                    "type": "ordinal",
+                                    "scale": {
+                                        "scheme": "sinebow"
+                                    }
+                                },
+                                "value": "lightgrey"
+                            },
+                            "opacity": {
+                                "condition": {
+                                    "selection": "LegendSelect",
+                                    "fields": ["SwarmIndex"],
+                                    "type": "ordinal",
+                                    "value": 1
+                                },
+                                "value": 0.1
+                            }
                         }
-                    }
-                };
+                    };
 
-                return spec;
-            }
+                    return spec;
+                }
 
-            function particleScatterChart(variableXName, variableXRange, variableYName, variableYRange) {
+                function particleResidualHistogram(variableName, variableRange) {
 
-                const spec = {
-                    "height": 150.0,
-                    "width": 250.0,
-                    "selection": {
-                        "LegendSelect": {
-                            "type": "multi",
-                            "resolve": "global",
-                            "fields": ["SwarmIndex"],
-                            "bind": "legend"
+                    const spec = {
+                        "height": 150.0,
+                        "width": 250.0,
+                        "mark": {
+                            "type": "circle",
+                            "clip": true
                         },
-                        "DataSelectGlobal": {
-                            "type": "interval",
-                            "resolve": "global"
-                        },
-                        "DataSelect": {
-                            "type": "interval",
-                            "on": "[mousedown[event.shiftKey], window:mouseup] > window:mousemove!",
-                            "resolve": "union"
+                        "encoding": {
+                            "y": {
+                                "title": particle_position_names[variableName] + "_Residual",
+                                "field": `Particle${variableName}Residual`,
+                                "type": "quantitative",
+                                "scale": { "domain": [-50.0, 100.0] }
+                            },
+                            "x": {
+                                "title": particle_position_names[variableName],
+                                "field": `Particle${variableName}Position`,
+                                "type": "quantitative",
+                                "scale": { "domain": variableRange }
+                            },
+                            "color": {
+                                "field": `Particle${variableName}Residual`,
+                                "x1": 1,
+                                "y1": 0,
+                                "x2": 1,
+                                "y2": 1,
+                                "gradient": "linear",
+                                "stops": [
+                                    {
+                                        "offset": 0,
+                                        "color": "#ff0000"
+                                    },
+                                    {
+                                        "offset": 1,
+                                        "color": "#00ff00"
+                                    }
+                                ]
+                            }
                         }
-                    },
-                    "mark": {
-                        "type": "circle",
-                        "clip": true
-                    },
-                    "encoding": {
-                        "x": {
-                            "title": particle_position_names[variableXName],
-                            "field": `Particle${variableXName}Position`,
-                            "type": "quantitative",
-                            "scale": { "domain": variableXRange }
+                    };
+
+                    return spec;
+                }
+
+                function particleResidualChart2(variableXName, variableXRange, variableYName, variableYRange) {
+
+                    const spec = {
+                        "height": 150.0,
+                        "width": 250.0,
+                        "selection": {
+                            "LegendSelect": {
+                                "type": "multi",
+                                "resolve": "global",
+                                "fields": ["SwarmIndex"],
+                                "bind": "legend"
+                            }
                         },
-                        "y": {
-                            "title": particle_position_names[variableYName],
-                            "field": `Particle${variableYName}Position`,
-                            "type": "quantitative",
-                            "scale": { "domain": variableYRange }
+                        "mark": {
+                            "type": "circle",
+                            "clip": true
                         },
-                        "tooltip": [{
-                            "field": "SwarmIndex",
-                            "type": "nominal"
-                            }, {
-                                "field": "Particle",
+                        "encoding": {
+                            "x": {
+                                "title": particle_position_names[variableXName],
+                                "field": `Particle${variableXName}Position`,
+                                "type": "quantitative",
+                                "scale": { "domain": variableXRange }
+                            },
+                            //"xError": { "field": `Particle${variableXName}Residual` },
+                            "y": {
+                                "title": particle_position_names[variableYName],
+                                "field": `Particle${variableYName}Position`,
+                                "type": "quantitative"
+                                //"scale": { "domain": variableYRange }
+                            },
+                            //"yError": {
+                            //    "field": `Particle${variableYName}Residual`,
+                            //    "scale": { "domain": [-100.0, 100.0] }
+                            //},
+                            "tooltip": {
+                                "field": "SwarmIndex",
                                 "type": "nominal"
-                            }],
-                        "color": {
-                            "condition": {
+                            },
+                            "color": {
+                                "value": "red"
+                            },
+                            "opacity": {
+                                "condition": {
+                                    "selection": "LegendSelect",
+                                    "value": 1
+                                },
+                                "value": 0.1
+                            }
+                        }
+                    };
+
+                    return spec;
+                }
+
+                function particleResidualChart(variableXName, variableXRange, variableYName, variableYRange) {
+
+                    const spec = {
+                        "height": 150.0,
+                        "width": 250.0,
+                        "mark": {
+                            "type": "bar",
+                            "clip": true,
+                            "filled": false,
+                            //"stroke": "transparent"
+                        },
+                        "encoding": { "color": { "value": "transparent" } },
+                        //"view": { "stroke": "transparent" }
+                    };
+
+                    return spec;
+                }
+
+                function VegaLiteScript57d5a8d11b54409a9aa616a6bb223366() {
+
+                    const vlSpecPSO = {
+                        "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+                        "config": {
+                            "legend": {
+                                "symbolLimit": 100,
+                                "columns": 2
+                            }
+                        },
+                        "data": {
+                            "format": { "type": "arrow" },
+                            "name": "pso_data"
+                        },
+                        "selection": {
+                            "LegendSelect": {
+                                "type": "multi",
+                                "fields": ["SwarmIndex"],
+                                "bind": "legend"
+                            }
+                        },
+                        "mark": {
+                            "type": "circle"
+                        },
+                        "encoding": {
+                            "x": {
+                                "field": "Particle0Position",
+                                "type": "quantitative",
+                                "scale": { "domain": [0.0001, 0.01] }
+                            },
+                            "y": {
+                                "field": "Particle1Position",
+                                "type": "quantitative",
+                                "scale": { "domain": [100.0, 10000.0] }
+                            },
+                            "tooltip": {
+                                "field": "SwarmIndex",
+                                "type": "nominal"
+                            },
+                            "color": {
                                 "field": "SwarmIndex",
                                 "type": "nominal",
-                                "selection": "DataSelect",
                                 "scale": {
-                                    "range": ["#ff4040", "#fc582a", "#f47218", "#e78d0b", "#d5a703", "#bfbf00", "#a7d503", "#8de70b", "#72f418", "#58fc2a", "#40ff40", "#2afc58", "#18f472", "#0be78d", "#03d5a7", "#00bfbf", "#03a7d5", "#0b8de7", "#1872f4", "#2a58fc", "#4040ff", "#582afc", "#7218f4", "#8d0be7", "#a703d5", "#bf00bf", "#d503a7", "#e70b8d", "#f41872", "#fc2a58","#ff4040"]
+                                    "scheme": "sinebow"
                                 }
                             },
-                            "value": "lightgrey"
-                        },
-                        "opacity": {
-                            "condition": {
-                                "selection": "LegendSelect",
-                                "value": 1
-                            },
-                            "value": 0.1
-                        }
-                    }
-                };
-
-                return spec;
-            }
-
-            function particleResidualHistogram(variableName, variableRange) {
-
-                const spec = {
-                    "height": 150.0,
-                    "width": 250.0,
-                    "mark": {
-                        "type": "circle",
-                        "clip": true
-                    },
-                    "encoding": {
-                        "y": {
-                            "title": particle_position_names[variableName] + "_Residual",
-                            "field": `Particle${variableName}Residual`,
-                            "type": "quantitative",
-                            "scale": { "domain": [-50.0, 100.0] }
-                        },
-                        "x": {
-                            "title": particle_position_names[variableName],
-                            "field": `Particle${variableName}Position`,
-                            "type": "quantitative",
-                            "scale": { "domain": variableRange }
-                        },
-                        "color": {
-                            "field": `Particle${variableName}Residual`,
-                            "scale": {
-                                "range": ["#ff0000", "#00ff00"]
+                            "opacity": {
+                                "condition": {
+                                    "selection": "LegendSelect",
+                                    "value": 1
+                                },
+                                "value": 0.2
                             }
-                        }
-                    }
-                };
-
-                return spec;
-            }
-
-            function particleResidualChart2(variableXName, variableXRange, variableYName, variableYRange) {
-
-                const spec = {
-                    "height": 150.0,
-                    "width": 250.0,
-                    "selection": {
-                        "LegendSelect": {
-                            "type": "multi",
-                            "resolve": "global",
-                            "fields": ["SwarmIndex"],
-                            "bind": "legend"
-                        }
-                    },
-                    "mark": {
-                        "type": "circle",
-                        "clip": true
-                    },
-                    "encoding": {
-                        "x": {
-                            "title": particle_position_names[variableXName],
-                            "field": `Particle${variableXName}Position`,
-                            "type": "quantitative",
-                            "scale": { "domain": variableXRange }
                         },
-                        //"xError": { "field": `Particle${variableXName}Residual` },
-                        "y": {
-                            "title": particle_position_names[variableYName],
-                            "field": `Particle${variableYName}Position`,
-                            "type": "quantitative"
-                            //"scale": { "domain": variableYRange }
+                        "height": 1000.0,
+                        "width": 1000.0
+                    };
+
+                    const particle0Range = [0.0001, 0.01];
+                    const particle1Range = [100.0, 10000.0];
+                    const particle2Range = [0.01, 100.0];
+                    const particle3Range = [100.0, 1000.0];
+                    const particle4Range = [50.0, 250.0];
+                    const particle5Range = [10.0, 150.0];
+
+                    const vlSpec57d5a8d11b54409a9aa616a6bb223366 = {
+                        "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
+                        //"height": 1000.0,
+                        //"width": 1000.0,
+                        "config": {
+                            "view": { "clip": true },
+                            //"range": {
+                            //    "ramp": {
+                            //        "scheme": "yellowOrangeRed"
+                            //    }
+                            //},
+                            "legend": {
+                                "symbolLimit": 200,
+                                "columns": 2
+                            },
+                            "padding": 30
+                            //{
+                            //    "left": 30,
+                            //    "right": 30,
+                            //    "top": 30,
+                            //    "bottom": 30
+                            //}
                         },
-                        //"yError": {
-                        //    "field": `Particle${variableYName}Residual`,
-                        //    "scale": { "domain": [-100.0, 100.0] }
+                        "data": {
+                            "format": { "type": "arrow" },
+                            "name": "pso_data"
+                        },
+                        //"resolve": {
+                        //    "legend": {
+                        //        "color": "independent"
+                        //    }                        
                         //},
-                        "tooltip": {
-                            "field": "SwarmIndex",
-                            "type": "nominal"
-                        },
-                        "color": {
-                            "value": "red"
-                        },
-                        "opacity": {
-                            "condition": {
-                                "selection": "LegendSelect",
-                                "value": 1
+                        "hconcat": [
+                            {
+
+                                "vconcat": [
+                                    //particleHistogram(0, particle0Range),
+                                    particleResidualChart(0, particle0Range, 0, particle0Range),
+                                    particleResidualChart(0, particle0Range, 1, particle1Range),
+                                    particleResidualChart(0, particle0Range, 2, particle2Range),
+                                    particleResidualChart(0, particle0Range, 3, particle3Range),
+                                    particleResidualChart(0, particle0Range, 4, particle4Range),
+                                    particleResidualChart(0, particle0Range)
+                                ]
                             },
-                            "value": 0.1
-                        }
-                    }
-                };
-
-                return spec;
-            }
-
-            function particleResidualChart(variableXName, variableXRange, variableYName, variableYRange) {
-
-                const spec = {
-                     "height": 150.0,
-                     "width": 250.0,
-                     "mark": {
-                         "type": "bar",
-                         "clip": true,
-                         "filled": false,
-                         "stroke": "transparent"
-                     },
-                     "view": { "stroke": "transparent" }
-                };
-
-                return spec;
-            }
-
-            function VegaLiteScript57d5a8d11b54409a9aa616a6bb223366() {
-
-                const vlSpecPSO = {
-                    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
-                    "config": {
-                        "legend": {
-                            "symbolLimit": 100,
-                            "columns": 2
-                        }
-                    },
-                    "data": {
-                        "format": { "type": "arrow" },
-                        "name": "pso_data"
-                    },
-                    "selection": {
-                        "LegendSelect": {
-                            "type": "multi",
-                            "fields": ["SwarmIndex"],
-                            "bind": "legend"
-                        }
-                    },
-                    "mark": {
-                        "type": "circle"
-                    },
-                    "encoding": {
-                        "x": {
-                            "field": "Particle0Position",
-                            "type": "quantitative",
-                            "scale": { "domain": [0.0001, 0.01] }
-                        },
-                        "y": {
-                            "field": "Particle1Position",
-                            "type": "quantitative",
-                            "scale": { "domain": [100.0, 10000.0] }
-                        },
-                        "tooltip": {
-                            "field": "SwarmIndex",
-                            "type": "nominal"
-                        },
-                        "color": {
-                            "field": "SwarmIndex",
-                            "type": "nominal",
-                            "scale": {
-                                "scheme": "sinebow"
-                            }
-                        },
-                        "opacity": {
-                            "condition": {
-                                "selection": "LegendSelect",
-                                "value": 1
+                            {
+                                "vconcat": [
+                                    particleScatterChart(1, particle1Range, 0, particle0Range),
+                                    //particleHistogram(1, particle1Range),
+                                    particleResidualChart(1, particle1Range, 1, particle1Range),
+                                    particleResidualChart(1, particle1Range, 2, particle2Range),
+                                    particleResidualChart(1, particle1Range, 3, particle3Range),
+                                    particleResidualChart(1, particle1Range, 4, particle4Range),
+                                    particleResidualChart(1, particle1Range, 5, particle5Range)
+                                ]
                             },
-                            "value": 0.2
-                        }
-                    },
-                    "height": 1000.0,
-                    "width": 1000.0
-                };
-
-                const particle0Range = [0.0001, 0.01];
-                const particle1Range = [100.0, 10000.0];
-                const particle2Range = [0.01, 100.0];
-                const particle3Range = [100.0, 1000.0];
-                const particle4Range = [50.0, 250.0];
-                const particle5Range = [10.0, 150.0];
-
-                const vlSpec57d5a8d11b54409a9aa616a6bb223366 = {
-                    "$schema": "https://vega.github.io/schema/vega-lite/v4.json",
-                    //"height": 1000.0,
-                    //"width": 1000.0,
-                    "config": {
-                        "view": { "clip": true },
-                        "range": {
-                            "ramp": {
-                                "scheme": "yellowOrangeRed"
+                            {
+                                "vconcat": [
+                                    particleScatterChart(2, particle2Range, 0, particle0Range),
+                                    particleScatterChart(2, particle2Range, 1, particle1Range),
+                                    particleScatterChart(2, particle2Range, 2, particle2Range),
+                                    //particleHistogram(2, particle2Range),
+                                    particleResidualChart(2, particle2Range, 3, particle3Range),
+                                    particleResidualChart(2, particle2Range, 4, particle4Range),
+                                    particleResidualChart(2, particle2Range, 5, particle5Range)
+                                ]
+                            },
+                            {
+                                "vconcat": [
+                                    particleScatterChart(3, particle3Range, 0, particle0Range),
+                                    particleScatterChart(3, particle3Range, 1, particle1Range),
+                                    particleScatterChart(3, particle3Range, 2, particle2Range),
+                                    particleScatterChart(3, particle3Range, 3, particle3Range),
+                                    //particleHistogram(3, particle3Range),
+                                    particleResidualChart(3, particle3Range, 4, particle4Range),
+                                    particleResidualChart(3, particle3Range, 5, particle5Range)
+                                ]
+                            },
+                            {
+                                "vconcat": [
+                                    particleScatterChart(4, particle4Range, 0, particle0Range),
+                                    particleScatterChart(4, particle4Range, 1, particle1Range),
+                                    particleScatterChart(4, particle4Range, 2, particle2Range),
+                                    particleScatterChart(4, particle4Range, 3, particle3Range),
+                                    particleScatterChart(4, particle4Range, 4, particle4Range),
+                                    //particleHistogram(4, particle4Range),
+                                    particleResidualChart(4, particle4Range, 5, particle5Range)
+                                ]
+                            },
+                            {
+                                "vconcat": [
+                                    particleScatterChart(5, particle5Range, 0, particle0Range),
+                                    particleScatterChart(5, particle5Range, 1, particle1Range),
+                                    particleScatterChart(5, particle5Range, 2, particle2Range),
+                                    particleScatterChart(5, particle5Range, 3, particle3Range),
+                                    particleScatterChart(5, particle5Range, 4, particle4Range),
+                                    particleScatterChart(5, particle5Range, 5, particle5Range)
+                                    //particleHistogram(5, particle5Range)
+                                ]
                             }
-                        },
-                        "legend": {
-                            "symbolLimit": 10,
-                            "columns": 1
-                        },
-                        "padding": 30
-                        //{
-                        //    "left": 30,
-                        //    "right": 30,
-                        //    "top": 30,
-                        //    "bottom": 30
-                        //}
-                    },
-                    "data": {
-                        "format": { "type": "arrow" },
-                        "name": "pso_data"
-                    },
-                    "resolve": {
-                        "scale": {
-                            "color": "independent"
-                        }                        
-                    },
-                    "hconcat": [
-                        {
+                        ]
+                    };
 
-                            "vconcat": [
-                                particleHistogram(0, particle0Range),
-                                particleResidualChart(0, particle0Range, 1, particle1Range),
-                                particleResidualChart(0, particle0Range, 2, particle2Range),
-                                particleResidualChart(0, particle0Range, 3, particle3Range),
-                                particleResidualChart(0, particle0Range, 4, particle4Range),
-                                particleResidualHistogram(0, particle0Range)
-                            ]
-                        },
-                        {
-                            "vconcat": [
-                                particleScatterChart(1, particle1Range, 0, particle0Range),
-                                particleHistogram(1, particle1Range),
-                                particleResidualChart(1, particle1Range, 2, particle2Range),
-                                particleResidualChart(1, particle1Range, 3, particle3Range),
-                                particleResidualChart(1, particle1Range, 4, particle4Range),
-                                particleResidualChart(1, particle1Range, 5, particle5Range)
-                            ]
-                        },
-                        {
-                            "vconcat": [
-                                particleScatterChart(2, particle2Range, 0, particle0Range),
-                                particleScatterChart(2, particle2Range, 1, particle1Range),
-                                particleHistogram(2, particle2Range),
-                                particleResidualChart(2, particle2Range, 3, particle3Range),
-                                particleResidualChart(2, particle2Range, 4, particle4Range),
-                                particleResidualChart(2, particle2Range, 5, particle5Range)
-                            ]
-                        },
-                        {
-                            "vconcat": [
-                                particleScatterChart(3, particle3Range, 0, particle0Range),
-                                particleScatterChart(3, particle3Range, 1, particle1Range),
-                                particleScatterChart(3, particle3Range, 2, particle2Range),
-                                particleHistogram(3, particle3Range),
-                                particleResidualChart(3, particle3Range, 4, particle4Range),
-                                particleResidualChart(3, particle3Range, 5, particle5Range)
-                            ]
-                        },
-                        {
-                            "vconcat": [
-                                particleScatterChart(4, particle4Range, 0, particle0Range),
-                                particleScatterChart(4, particle4Range, 1, particle1Range),
-                                particleScatterChart(4, particle4Range, 2, particle2Range),
-                                particleScatterChart(4, particle4Range, 3, particle3Range),
-                                particleHistogram(4, particle4Range),
-                                particleResidualChart(4, particle4Range, 5, particle5Range)
-                            ]
-                        },
-                        {
-                            "vconcat": [
-                                particleScatterChart(5, particle5Range, 0, particle0Range),
-                                particleScatterChart(5, particle5Range, 1, particle1Range),
-                                particleScatterChart(5, particle5Range, 2, particle2Range),
-                                particleScatterChart(5, particle5Range, 3, particle3Range),
-                                particleScatterChart(5, particle5Range, 4, particle4Range),
-                                particleHistogram(5, particle5Range)
-                            ]
-                        }
-                    ]
+                    RequireVegaLite("57d5a8d11b54409a9aa616a6bb223366", vlSpec57d5a8d11b54409a9aa616a6bb223366, "webgl");
+                }
+
+                function RenderIterations() {
+                    RenderIterationsAsync().then(function () { console.log("RenderIterations"); });
+                }
+
+                async function RenderIterationsAsync() {
+                    //for (let index = 1; index < 499; index++) {
+                    //    await OnChangeIteration(index);
+                    //}
+                }
+
+                function VegaLiteRenderedFunc(d3Color, vega, vegaLite, vegaWebgl, apacheArrow, vegaLoaderArrow, view) {
+
+                    LoadApacheArrow("https://raw.githubusercontent.com/trmcnealy/JupyterNotebooks/master/Notebooks/Data/PSO.arrow").then(function(result) {
+
+                        window["pso_data_file"] = result;
+
+                        ChangeIteration(0);
+
+                        //RenderIterations();
+                    });
+
+
+
+
+
+                    //async function clientLoadArrowData(dataUrl) {
+                    //console.log(dataUrl);
+                    //const response = await fetch(dataUrl);
+                    //console.log(response);
+                    //return await response.arrayBuffer();
+                    //};
+
+                    //clientLoadArrowData("https://raw.githubusercontent.com/trmcnealy/JupyterNotebooks/master/Notebooks/Data/PSO.arrow").then(async function(result) {
+
+                    //console.log(result);
+
+                    //view.data("pso_data", Array.from(Table.from(result).filter(arrow.predicate.col("Iteration").eq(0)).select(["Particle0Position", "Particle1Position"])));
+                    //});
+
+                    //console.log(vegaLoaderArrow);
+
+                    //view.data("pso_data1", Array.from(vegaLoaderArrow.filter(arrow.predicate.col("Iteration").eq(0)).select(["Particle1Position", "Particle2Position"])));
+
+                    //console.log(vegaArrowTransforms);
+                    //._data.getColumn("SwarmIndex"));
+
+                    //console.log(columnStats(window["vegaArrowTransforms"]._data, "SwarmIndex"));
+
                 };
 
-                RequireVegaLite("57d5a8d11b54409a9aa616a6bb223366", vlSpec57d5a8d11b54409a9aa616a6bb223366, "webgl");
+                window.addEventListener("vega-lite-loaded",
+                    function(e) {
+                        console.log("vega-lite-loaded");
+                        VegaLiteScript57d5a8d11b54409a9aa616a6bb223366();
+                    },
+                    false);
+
+                window.addEventListener("vega-lite-rendered",
+                    function(e) {
+                        console.log("vega-lite-rendered");
+
+                        if ("undefined" !== e.detail.view) {
+                            window["view"] = e.detail.view;
+                        }
+
+                        VegaLiteRenderedFunc(e.detail.d3Color, e.detail.vega, e.detail.vegaLite, e.detail.vegaWebgl, e.detail.apacheArrow, e.detail.vegaLoaderArrow, e.detail.view);
+                    },
+                    false);
+
+            </script>
+        </div>
+        <input type="range" min="0" max="249" value="0" class="slider" id="IterationRange" onchange="ChangeIteration(this.value)">
+        <p>Iteration: <span id="IterationValue"></span></p>
+        <script>
+
+            //async function update_histogram_data(data) {
+            //    const t0 = performance.now();
+
+            //    const histogram_dictionary = window["histogram_data"];
+
+            //    for await (const [key, value] of histogram_dictionary) {
+            //        const variableName = value;
+
+            //        const histogram_data = data.pso_data.getColumn(`Particle${variableName}Position`);
+
+            //        window["view"].data(key, Array.from(histogram_data));
+            //    }
+
+            //    const t1 = performance.now();
+            //    console.log("histogram_data:" + (t1 - t0) + " milliseconds.");
+            //}
+
+            //async function update_scatter_data(data) {
+            //    const t0 = performance.now();
+
+            //    const scatter_dictionary = window["scatter_data"];
+
+            //    for await (const [key, value] of scatter_dictionary) {
+            //        const variableXName = value[0];
+            //        const variableYName = value[1];
+
+            //        const scatter_data = data.pso_data.select([`Particle${variableXName}Position`, `Particle${variableYName}Position`]);
+
+            //        window["view"].data(key).values = Array.from(scatter_data);
+            //    }
+            //    const t1 = performance.now();
+            //    console.log("scatter_data:" + (t1 - t0) + " milliseconds.");
+            //}
+
+            //async function update_residual_data(data) {
+            //    const t0 = performance.now();
+            //    const residual_dictionary = window["residual_data"];
+
+            //    for await (const [key, value] of residual_dictionary) {
+            //        const variableXName = value[0];
+            //        const variableYName = value[1];
+
+            //        const residual_data = data.pso_data.select([`Particle${variableXName}Position`, `Particle${variableYName}Position`]);
+
+            //        window["view"].data(key).values = Array.from(residual_data);
+            //    }
+            //    const t1 = performance.now();
+            //    console.log("residual_data:" + (t1 - t0) + " milliseconds.");
+            //}
+
+            function ChangeIteration(value) {
+                //overlay_on();
+                OnChangeIteration(value).then(function () { console.log("OnChangeIteration"); });
+                //overlay_off();
             }
 
-            function RenderIterations() {
-                RenderIterationsAsync().then(function () { console.log("RenderIterations"); });
+            async function OnChangeIteration(value) {           
+
+                var IterationRange = document.getElementById("IterationRange");
+                IterationRange.value = value;
+                var IterationValue = document.getElementById("IterationValue");
+                IterationValue.innerHTML = value;
+
+                const pso_data = window["pso_data_file"].filter(window["apacheArrow"].predicate.col("Iteration").eq(value));
+
+                window["view"].data("pso_data", Array.from(pso_data));
+
+                await window["view"].runAsync();
+
+                //////////////////////
+
+                //const canvas = document.querySelector("#vis-57d5a8d11b54409a9aa616a6bb223366").firstElementChild;
+                //var context = canvas.getContext('webgl', { preserveDrawingBuffer: true });
+
+                //var image = document.createElement("a");
+
+                //image.href = canvas.toDataURL('image/jpeg', 0.95);
+
+                //image.download = `PSO-Iteration${value}.png`;
+
+                //document.body.appendChild(image);
+
+                //image.click();
+
+                //document.body.removeChild(image);
+
             }
-
-            async function RenderIterationsAsync() {
-                //for (let index = 1; index < 499; index++) {
-                //    await OnChangeIteration(index);
-                //}
-            }
-
-            function VegaLiteRenderedFunc(d3Color, vega, vegaLite, vegaWebgl, apacheArrow, vegaLoaderArrow, view) {
-
-                LoadApacheArrow("https://raw.githubusercontent.com/trmcnealy/JupyterNotebooks/master/Notebooks/Data/PSO.arrow").then(function(result) {
-
-                    window["pso_data_file"] = result;
-
-                    ChangeIteration(0);
-
-                    RenderIterations();
-                });
-
-
-
-
-
-                //async function clientLoadArrowData(dataUrl) {
-                //console.log(dataUrl);
-                //const response = await fetch(dataUrl);
-                //console.log(response);
-                //return await response.arrayBuffer();
-                //};
-
-                //clientLoadArrowData("https://raw.githubusercontent.com/trmcnealy/JupyterNotebooks/master/Notebooks/Data/PSO.arrow").then(async function(result) {
-
-                //console.log(result);
-
-                //view.data("pso_data", Array.from(Table.from(result).filter(arrow.predicate.col("Iteration").eq(0)).select(["Particle0Position", "Particle1Position"])));
-                //});
-
-                //console.log(vegaLoaderArrow);
-
-                //view.data("pso_data1", Array.from(vegaLoaderArrow.filter(arrow.predicate.col("Iteration").eq(0)).select(["Particle1Position", "Particle2Position"])));
-
-                //console.log(vegaArrowTransforms);
-                //._data.getColumn("SwarmIndex"));
-
-                //console.log(columnStats(window["vegaArrowTransforms"]._data, "SwarmIndex"));
-
-            };
-
-            window.addEventListener("vega-lite-loaded",
-                function(e) {
-                    console.log("vega-lite-loaded");
-                    VegaLiteScript57d5a8d11b54409a9aa616a6bb223366();
-                },
-                false);
-
-            window.addEventListener("vega-lite-rendered",
-                function(e) {
-                    console.log("vega-lite-rendered");
-
-                    if ("undefined" !== e.detail.view) {
-                        window["view"] = e.detail.view;
-                    }
-
-                    VegaLiteRenderedFunc(e.detail.d3Color, e.detail.vega, e.detail.vegaLite, e.detail.vegaWebgl, e.detail.apacheArrow, e.detail.vegaLoaderArrow, e.detail.view);
-                },
-                false);
 
         </script>
     </div>
-    <input type="range" min="0" max="499" value="0" class="slider" id="IterationRange" onchange="ChangeIteration(this.value)">
-    <p>Iteration: <span id="IterationValue"></span></p>
-    <script>
-
-        //async function update_histogram_data(data) {
-        //    const t0 = performance.now();
-
-        //    const histogram_dictionary = window["histogram_data"];
-
-        //    for await (const [key, value] of histogram_dictionary) {
-        //        const variableName = value;
-
-        //        const histogram_data = data.pso_data.getColumn(`Particle${variableName}Position`);
-
-        //        window["view"].data(key, Array.from(histogram_data));
-        //    }
-
-        //    const t1 = performance.now();
-        //    console.log("histogram_data:" + (t1 - t0) + " milliseconds.");
-        //}
-
-        //async function update_scatter_data(data) {
-        //    const t0 = performance.now();
-
-        //    const scatter_dictionary = window["scatter_data"];
-
-        //    for await (const [key, value] of scatter_dictionary) {
-        //        const variableXName = value[0];
-        //        const variableYName = value[1];
-
-        //        const scatter_data = data.pso_data.select([`Particle${variableXName}Position`, `Particle${variableYName}Position`]);
-
-        //        window["view"].data(key).values = Array.from(scatter_data);
-        //    }
-        //    const t1 = performance.now();
-        //    console.log("scatter_data:" + (t1 - t0) + " milliseconds.");
-        //}
-
-        //async function update_residual_data(data) {
-        //    const t0 = performance.now();
-        //    const residual_dictionary = window["residual_data"];
-
-        //    for await (const [key, value] of residual_dictionary) {
-        //        const variableXName = value[0];
-        //        const variableYName = value[1];
-
-        //        const residual_data = data.pso_data.select([`Particle${variableXName}Position`, `Particle${variableYName}Position`]);
-
-        //        window["view"].data(key).values = Array.from(residual_data);
-        //    }
-        //    const t1 = performance.now();
-        //    console.log("residual_data:" + (t1 - t0) + " milliseconds.");
-        //}
-
-        function ChangeIteration(value) {
-            overlay_on();
-            OnChangeIteration(value).then(function () { console.log("OnChangeIteration"); });
-            overlay_off();
-        }
-
-        async function OnChangeIteration(value) {           
-
-            var IterationRange = document.getElementById("IterationRange");
-            IterationRange.value = value;
-            var IterationValue = document.getElementById("IterationValue");
-            IterationValue.innerHTML = value;
-
-            var t0, t1;
-
-            t0 = performance.now();
-            const pso_data = window["pso_data_file"].filter(window["apacheArrow"].predicate.col("Iteration").eq(value));
-
-            window["view"].data("pso_data", Array.from(pso_data));
-            t1 = performance.now();
-            console.log("pso_data:" + (t1 - t0) + " milliseconds.");
-            
-            ///////////////////////
-
-            //await update_histogram_data({ "pso_data": pso_data});
-            //await update_scatter_data({ "pso_data": pso_data });
-            //await update_residual_data({ "pso_data": pso_data });
-
-            ///////////////////////
-            t0 = performance.now();
-            await window["view"].runAsync();
-            t1 = performance.now();
-            console.log("view:" + (t1 - t0) + " milliseconds.");
-            ///////////////////////
-
-            //const canvas = document.querySelector("#vis-57d5a8d11b54409a9aa616a6bb223366").firstElementChild;
-            //var context = canvas.getContext('webgl', { preserveDrawingBuffer: true });
-
-            //var image = document.createElement("a");
-
-            //image.href = canvas.toDataURL('image/jpeg', 0.95);
-
-            //image.download = `PSO-Iteration${value}.png`;
-
-            //document.body.appendChild(image);
-
-            //image.click();
-
-            //document.body.removeChild(image);
-
-        }
-
-    </script>
-</div>
 </body>
 </html>
