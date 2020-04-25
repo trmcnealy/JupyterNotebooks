@@ -98,6 +98,33 @@
 
                 const particle_position_names = ["km", "kF", "kf", "ye", "LF", "Lf"];
 
+                
+                function oldParticleHistogram(variableName, variableRange) {
+
+                    const spec = {
+                        "height": 150.0,
+                        "width": 250.0,
+                        "mark": {
+                            "type": "bar",
+                            "clip": true
+                        },
+                        "encoding": {
+                            "x": {
+                                "bin": true,
+                                "field": `Particle${variableName}Position`,
+                                "type": "quantitative",
+                                "scale": { "domain": variableRange }
+                            },
+                            "y": {
+                                "aggregate": "count",
+                                "type": "quantitative"
+                            }
+                        }
+                    };
+
+                    return spec;
+                }
+
                 function particleHistogram(variableName, variableRange) {
 
                     const spec = {
@@ -438,13 +465,20 @@
                                 "symbolLimit": 200,
                                 "columns": 2
                             },
-                            "padding": 30
+                            //"padding":
                             //{
-                            //    "left": 30,
-                            //    "right": 30,
-                            //    "top": 30,
-                            //    "bottom": 30
+                                //"left": 30,
+                                //"right": 30,
+                                //"top": 30
+                                //"bottom": 30
                             //}
+                        },
+                        "padding":
+                        {
+                            "left": 30,
+                            //"right": 30,
+                            "top": 30
+                            //"bottom": 30
                         },
                         "data": {
                             "format": { "type": "arrow" },
@@ -460,7 +494,7 @@
 
                                 "vconcat": [
                                     //particleHistogram(0, particle0Range),
-                                    particleResidualChart(0, particle0Range, 0, particle0Range),
+                                    particleScatterChart(0, particle0Range, 0, particle0Range),
                                     particleResidualChart(0, particle0Range, 1, particle1Range),
                                     particleResidualChart(0, particle0Range, 2, particle2Range),
                                     particleResidualChart(0, particle0Range, 3, particle3Range),
@@ -472,7 +506,7 @@
                                 "vconcat": [
                                     particleScatterChart(1, particle1Range, 0, particle0Range),
                                     //particleHistogram(1, particle1Range),
-                                    particleResidualChart(1, particle1Range, 1, particle1Range),
+                                    particleScatterChart(1, particle1Range, 1, particle1Range),
                                     particleResidualChart(1, particle1Range, 2, particle2Range),
                                     particleResidualChart(1, particle1Range, 3, particle3Range),
                                     particleResidualChart(1, particle1Range, 4, particle4Range),
@@ -526,7 +560,7 @@
                         ]
                     };
 
-                    RequireVegaLite("57d5a8d11b54409a9aa616a6bb223366", vlSpec57d5a8d11b54409a9aa616a6bb223366, "webgl");
+                    RequireVegaLite("57d5a8d11b54409a9aa616a6bb223366", vlSpec57d5a8d11b54409a9aa616a6bb223366, "svg");
                 }
 
                 function RenderIterations() {
@@ -600,7 +634,7 @@
 
             </script>
         </div>
-        <input type="range" min="0" max="249" value="0" class="slider" id="IterationRange" onchange="ChangeIteration(this.value)">
+        <input type="range" min="0" max="249" value="0" step="10" class="slider" id="IterationRange" onchange="ChangeIteration(this.value)">
         <p>Iteration: <span id="IterationValue"></span></p>
         <script>
 
