@@ -1,0 +1,60 @@
+#!csharp
+
+#r "nuget:System.Reactive.Linq, 4.1.5"
+
+#!markdown
+
+VSCode Test
+
+#!csharp
+
+#!html
+
+<b>Hello!</b>
+
+#!csharp
+
+display(
+    span(
+        img[src:"https://en.wikipedia.org/favicon.ico", style:"height:1.5em"],
+        a[href: @"https://en.wikipedia.org", target: "blank", style:"color:green"](b("Wikipedia"))
+    )
+);
+
+#!csharp
+
+#!js
+
+display("hello");
+
+#!csharp
+
+Javascript(@"alert(""Hello!"");");
+
+#!csharp
+
+#!markdown
+
+Write a **list** ...
+* first
+* second
+
+...or a _table_...
+
+|Fruit    |Texture |
+|---------|--------|
+|apple    |smooth  |
+|durian   |bumpy   |
+
+#!csharp
+
+using System.Reactive;
+using System.Reactive.Linq;
+using System.Reactive.Concurrency;
+
+var output = display("Counting...");
+
+var sub = Observable
+    .Interval(TimeSpan.FromSeconds(.5), CurrentThreadScheduler.Instance)    
+    .Take(10) 
+    .Subscribe(i => output.Update(i));
