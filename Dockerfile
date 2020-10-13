@@ -14,18 +14,28 @@ USER root
 RUN apt-get update
 RUN apt-get install -y curl
 
+ENV \
+    # Enable detection of running in a container
+    DOTNET_RUNNING_IN_CONTAINER=true \
+    # Enable correct mode for dotnet watch (only mode supported in a container)
+    DOTNET_USE_POLLING_FILE_WATCHER=true \
+    # Skip extraction of XML docs - generally not useful within an image/container - helps performance
+    NUGET_XMLDOC_MODE=skip \
+    # Opt out of telemetry until after we install jupyter when building the image, this prevents caching of machine id
+    DOTNET_TRY_CLI_TELEMETRY_OPTOUT=true
+
 # Install .NET CLI dependencies
-RUN apt-get install -y --no-install-recommends \
+RUN apt-get update \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
         libc6 \
         libgcc1 \
         libgssapi-krb5-2 \
-        libicu60 \
+        libicu66 \
         libssl1.1 \
         libstdc++6 \
-        zlib1g 
-
-RUN rm -rf /var/lib/apt/lists/*
-
+        zlib1g \
+    && rm -rf /var/lib/apt/lists/*
+    
 # Install .NET Core SDK
 ENV DOTNET_SDK_VERSION 3.1.101
 
@@ -60,8 +70,8 @@ COPY ./NuGet.config ${HOME}/nuget.config
 RUN chown -R ${NB_UID} ${HOME}
 USER ${USER}
 
-# Install lastest build from master branch of Microsoft.DotNet.Interactive from myget
-RUN dotnet tool install -g dotnet-interactive --add-source "https://dotnet.myget.org/F/dotnet-try/api/v3/index.json"
+# Install lastest build from main branch of Microsoft.DotNet.Interactive from myget
+RUN dotnet tool install -g Microsoft.dotnet-interactive --version 1.0.150201 --add-source "https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet-tools/nuget/v3/index.json"
 
 ENV PATH="${PATH}:${HOME}/.dotnet/tools"
 RUN echo "$PATH"
